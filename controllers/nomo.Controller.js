@@ -107,7 +107,7 @@ const searchNomo = async (req, res) => {
       .select("-contributors")
       .select("-maintainerlink")
       .lean();
-    res.send(data);
+    res.send({ totalPages: data.length / 10, nomos: data });
   } catch (err) {
     console.log(err.message);
   }
