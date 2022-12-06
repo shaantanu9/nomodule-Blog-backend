@@ -3,7 +3,14 @@ const Nomo = require("../models/nomo.Model");
 
 const { get, getById, patch, post, deleteOne } = crud(Nomo);
 
-const getNomo = async (req, res) => get(req, res);
+const getNomo = async (req, res) => {
+  try {
+    const data = await Nomo.find().select("-markdown").select("-code");
+    res.send(data);
+  } catch (err) {
+    console.log(err.message);
+  }
+};
 
 const getNomolimit = async (req, res) => {
   console.log(req.query, "req.query");
@@ -18,13 +25,31 @@ const getNomolimit = async (req, res) => {
   const totalPages = Math.ceil(totalnomos / limit);
   // get all nomos
   const nomos = await Nomo.find({ isPrivate: false })
+    .select("-markdown")
+    .select("-code")
+    .select("-file_link")
+    .select("-maintainername")
+    .select("-maintainerlink")
+    .select("-pypi_link")
+    .select("-link")
+    .select("-watching")
+    .select("-github")
+    .select("-issues")
+    .select("-licence")
+    .select("-package_details")
+    .select("-email")
+    .select("-time")
+    .select("-homepage")
+    .select("-topics")
+
+    .select("-code1")
+    // .select("-detail")
+    .select("-contributors")
+    .select("-url")
     .lean()
     .limit(limit) // limit the number of nomos to be returned
     .skip((page - 1) * limit) // skip the number of nomos to be returned
-    .sort({ createdAt: -1 }) // sort the nomos by date created
-    // .select("-commentsList, -likesList"); // select all the fields except the commentsList
-    .select("-commentsList"); // select all the fields except the commentsList
-  // .select("-likesList"); // select all the fields except the likesList
+    .sort({ createdAt: -1 }); // sort the nomos by date created
   console.log(nomos.length, "nomos.length", totalnomos);
   res.send({ totalPages, nomos });
 };
@@ -32,8 +57,12 @@ const getNomolimit = async (req, res) => {
 const getNomoById = async (req, res) => getById(req, res);
 
 const getNomoBySlug = async (req, res) => {
+  console.log(req.params.slug, "req.params");
+  const slug = req.params.slug;
   try {
-    const data = await Nomo.findOne({ slug: req.params.slug }).lean();
+    const data = await Nomo.find({
+      $or: [{ slug: slug }, { slug: slug.toLowerCase() }],
+    });
     res.send(data);
   } catch (err) {
     console.log(err.message);

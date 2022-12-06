@@ -20,9 +20,9 @@ const {
 router.get("/", getNomolimit);
 router.post("/", postNomo);
 router.get("/s", searchNomo);
+router.get("/slug/:slug", getNomoBySlug);
 router.get("/:id", getNomoById);
 router.delete("/:id", deleteNomo);
 router.patch("/:id", patchNomo);
-router.get("/slug/:slug", getNomoBySlug);
 
 module.exports = router;

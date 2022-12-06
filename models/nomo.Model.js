@@ -120,6 +120,9 @@ const nomoSchema = new mongoose.Schema(
     markdown: {
       type: String,
     },
+    slug: {
+      type: String,
+    },
   },
   {
     timestamps: true,
