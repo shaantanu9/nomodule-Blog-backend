@@ -22,8 +22,9 @@ router.post("/", postNomo);
 router.get("/s", searchNomo);
 router.get("/slugs", async (req, res) => {
   const data = await Nomo.find({}).select("slug").lean();
-  getSingleSlug(data);
-  res.send({ data: data[0] });
+  let randomLoop = Math.random() * 100;
+  getSingleSlug(data, randomLoop);
+  res.send({ data: data[0], randomLoop });
 });
 
 router.get("/slug/:slug", getNomoBySlug);

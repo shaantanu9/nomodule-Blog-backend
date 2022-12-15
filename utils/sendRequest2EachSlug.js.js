@@ -8,17 +8,25 @@ const sendRequest = async (slug) => {
   try {
     const response = await axios.get(url);
     // console.log(response.data);
+    console.log("url: ", url);
   } catch (err) {
     console.log(err.message);
   }
 };
 
-const getSingleSlug = async (SlugArray) => {
-  let randomLoop = Math.floor(Math.random() * 200);
+const getSingleSlug = async (SlugArray, randomLoop) => {
   for (let i = 0; i < randomLoop; i++) {
     //   for (let i = 0; i < SlugArray.length; i++) {
     let randomNum = Math.floor(Math.random() * SlugArray.length); // 0 - 3000
     await sendRequest(SlugArray[randomNum].slug);
+    console.log(
+      "count: ",
+      i,
+      "randomNum: ",
+      randomNum,
+      "randomLoop: ",
+      randomLoop
+    );
     // await createSitemap(SlugArray[i].slug, i);
   }
 };
