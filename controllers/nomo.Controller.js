@@ -54,6 +54,8 @@ const getNomolimit = async (req, res) => {
   res.send({ totalPages, nomos });
 };
 
+
+
 const getNomoById = async (req, res) => getById(req, res);
 
 const getNomoBySlug = async (req, res) => {

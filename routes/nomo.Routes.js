@@ -1,8 +1,8 @@
 const express = require("express"); // require express
 const router = express.Router(); // create express router
-
+const Nomo = require("../models/nomo.Model");
 // require the controller
-
+const { getSingleSlug } = require("../utils/sendRequest2EachSlug.js");
 const {
   getNomo,
   getNomoById,
@@ -20,6 +20,12 @@ const {
 router.get("/", getNomolimit);
 router.post("/", postNomo);
 router.get("/s", searchNomo);
+router.get("/slugs", async (req, res) => {
+  const data = await Nomo.find({}).select("slug").lean();
+  getSingleSlug(data);
+  res.send(data);
+});
+
 router.get("/slug/:slug", getNomoBySlug);
 router.get("/:id", getNomoById);
 router.delete("/:id", deleteNomo);
