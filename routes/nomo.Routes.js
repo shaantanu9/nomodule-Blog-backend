@@ -23,7 +23,7 @@ router.get("/s", searchNomo);
 router.get("/slugs", async (req, res) => {
   const data = await Nomo.find({}).select("slug").lean();
   getSingleSlug(data);
-  res.send(data);
+  res.send({ data: data[0] });
 });
 
 router.get("/slug/:slug", getNomoBySlug);
