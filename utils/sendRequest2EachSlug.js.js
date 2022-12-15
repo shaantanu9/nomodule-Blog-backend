@@ -14,9 +14,11 @@ const sendRequest = async (slug) => {
 };
 
 const getSingleSlug = async (SlugArray) => {
-  for (let i = 0; i < 100; i++) {
+  let randomLoop = Math.floor(Math.random() * 200);
+  for (let i = 0; i < randomLoop; i++) {
     //   for (let i = 0; i < SlugArray.length; i++) {
-    await sendRequest(SlugArray[i].slug);
+    let randomNum = Math.floor(Math.random() * SlugArray.length); // 0 - 3000
+    await sendRequest(SlugArray[randomNum].slug);
     // await createSitemap(SlugArray[i].slug, i);
   }
 };
