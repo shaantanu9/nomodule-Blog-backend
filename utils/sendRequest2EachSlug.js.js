@@ -32,5 +32,5 @@ const downloadXml = async () => {
   console.log(response.data);
   fs.writeFileSync("./sitemap-0Whole.xml", response.data);
 };
-downloadXml();
+// downloadXml();
 //
